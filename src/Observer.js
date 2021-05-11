@@ -2,10 +2,13 @@ import { def } from "./utils"
 import defineReactive from "./defineReactive"
 import { arrayMethods } from "./array"
 import observe from "./observe"
+import Dep from "./Dep"
 
 // Observer类就是将一个正常的obj转化为每个层级属性都可以被侦测的obj
 export default class Observer {
   constructor(value) {
+    // 每一个observer的实例都有一个dep实例  响应式的对象每一层的对象（数组）的__pb__属性都会在其内部实例化一个dep
+    this.dep = new Dep()
     // 给value对象自定义__ob__属性  属性值为实例对象本省
     def(value, "__ob__", this, false)
     // 如果是数组  就蛮干 将数组的原型指向引入的arrayMethods
@@ -18,7 +21,7 @@ export default class Observer {
     }
   }
   // 遍历 将value对象zhong每一个属性都变为响应式的
-  walk(value) {
+  walk(value) {  
     for(let i in value) {
       // defineReactive用于将对象的某个属性变为响应式
       defineReactive(value, i)

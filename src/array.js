@@ -25,7 +25,7 @@ methodsNeedChange.forEach(methodName => {
     // push unshift splice三种方法能够插入新项 插入的新项也要变成响应式
     let inserted = []
 
-    let args = arguments
+    let args = [...arguments]
 
     switch (methodName) {
       case "push":
@@ -46,6 +46,7 @@ methodsNeedChange.forEach(methodName => {
     // 恢复数组原来的方法  注意this的指向
     const result = original.apply(this, arguments)
 
+    ob.dep.notify()
 
     return result
 

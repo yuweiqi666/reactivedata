@@ -1,4 +1,6 @@
 import observe from "./observe"
+import Watcher from "./Watcher"
+
 var obj = {
   a: {
     m: {
@@ -12,10 +14,12 @@ var obj = {
 
 observe(obj)
 
-
+new Watcher(obj, "a.m.n", (val) => {
+  console.log("☆")
+})
 // obj.c.pop()
 
 
-console.log(obj.c[0]);
+console.log(obj.a.m.n = 6);
 
 // 
